@@ -1,0 +1,35 @@
+node {
+    def app
+    creds_nm = "pipeline-docker-hub"  // my creds for login to docker-hub
+    registry_nm = "ggriffin924/flask-alpine-docker"
+    container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
+    image_tag = "dev-${env.BUILD_NUMBER}"
+    image_name = "${registry_nm}:${image_tag}"
+
+    stage('Clone repo'){
+        checkout scm
+    }
+    stage('Build Image'){
+        app = docker.build("${registry_nm}","-f python3/Dockerfile python3") 
+    }
+    stage('Push Image to dockerhub') {
+        echo "Push Image: ${image_name}"
+        docker.withRegistry('https://registry-1.docker.io/v2/', "${creds_nm}") {
+               app.push("${image_tag}")
+               app.push("latest")
+        }
+    }
+    stage('Deploy Docker image'){
+        // docker run -d --name flask-alpine-docker -p 8081:80 ggriffin924/flask-alpine-docker:<label>
+            echo "My current build image: ${image_name}"
+            try {
+                sh  "docker stop ${container_nm}"
+                sh  "docker rm ${container_nm}"
+            } catch (all) {
+                // do cleanup
+                echo "Docker ${container_nm} not found"
+                // throw new Exception("Stop docker container failed")
+            }
+            sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/app/static/images ${image_name}"
+    }
+}

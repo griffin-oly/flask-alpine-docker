@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+   db:
+      image: mysql:5.7
+      command: --default-authentication-plugin=mysql_native_password
+      restart: always
+      volumes:
+        - "/opt/data/mysql:/var/lib/mysql"
+      ports:
+       - "3606:3606"
+      environment:
+         MYSQL_ROOT_PASSWORD: "mypasswd"
+         MYSQL_DATABASE: "flask"
+
