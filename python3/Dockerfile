@@ -3,6 +3,7 @@ FROM alpine
 LABEL maintainer "Griffin <ggriffin924@gmail.com>"
 LABEL description "Nginx + uWSGI + Flask based on Alpine Linux and managed by Supervisord"
 
+VOLUME "/app/static/images"
 # Copy python requirements file
 COPY requirements.txt /tmp/requirements.txt
 
