@@ -30,6 +30,6 @@ node {
                 echo "Docker ${container_nm} not found"
                 // throw new Exception("Stop docker container failed")
             }
-            sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/mnt ${image_name}"
+            sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/app/static/images ${image_name}"
     }
 }
