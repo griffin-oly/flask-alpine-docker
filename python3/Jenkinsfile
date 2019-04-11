@@ -2,18 +2,18 @@ node {
     def app
     registry_nm = "ggriffin924/flask-alpine-docker"
     container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
-    image_tag = "${container_nm}-${env.BUILD_NUMBER}"
+    image_tag = "$dev-${env.BUILD_NUMBER}"
     image_name = "${registry_nm}:${image_tag}"
 
     stage('Clone repo'){
         checkout scm
     }
     stage('Build Image'){
-        app = docker.build("ggriffin924/flask-alpine-docker", "-f python3/Dockerfile python3") 
+        app = docker.build("${registry_nm}", "-f python3/Dockerfile python3") 
     }
     stage('Push Image to dockerhub') {
         echo "Push Image: ${image_name}"
-        docker.withRegistry('https://registry-1.docker.io/v2/', "${container_nm}") {
+        docker.withRegistry('https://registry-1.docker.io/v2/', "${registry_nm}") {
                app.push("${image_tag}")
                app.push("latest")
         }
