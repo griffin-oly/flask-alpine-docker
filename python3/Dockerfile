@@ -1,6 +1,6 @@
 FROM alpine
 
-LABEL maintainer "Roman Dodin <dodin.roman@gmail.com>"
+LABEL maintainer "Griffin <ggriffin924@gmail.com>"
 LABEL description "Nginx + uWSGI + Flask based on Alpine Linux and managed by Supervisord"
 
 # Copy python requirements file
