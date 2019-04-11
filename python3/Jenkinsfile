@@ -2,7 +2,7 @@ node {
     def app
     registry_nm = "ggriffin924/flask-alpine-docker"
     container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
-    image_tag = "$dev-${env.BUILD_NUMBER}"
+    image_tag = "dev-${env.BUILD_NUMBER}"
     image_name = "${registry_nm}:${image_tag}"
 
     stage('Clone repo'){
