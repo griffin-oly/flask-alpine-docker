@@ -19,17 +19,15 @@ node {
                app.push("latest")
         }
     }
-    stage('Deploy Docker image'){
+    stage('Deploy Application'){
         // docker run -d --name flask-alpine-docker -p 8081:80 ggriffin924/flask-alpine-docker:<label>
             echo "My current build image: ${image_name}"
             try {
-                sh  "docker stop ${container_nm}"
-                sh  "docker rm ${container_nm}"
+                sh  "docker-compose up -d"
             } catch (all) {
                 // do cleanup
-                echo "Docker ${container_nm} not found"
-                // throw new Exception("Stop docker container failed")
+                echo "Docker-Compose errors"
             }
-            sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/app/static/images ${image_name}"
+            // sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/app/static/images ${image_name}"
     }
 }

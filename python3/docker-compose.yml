@@ -1,0 +1,33 @@
+version: '2'
+
+services:
+
+   flask:
+      image: ggriffin924/flask-alpine-docker:latest
+      restart: always
+      volumes:
+        - "/opt/data/images:/app/static/images"
+      ports:
+        - "8081:80"
+      depends_on:
+        - db
+
+   db:
+      image: mysql:5.7
+      command: --default-authentication-plugin=mysql_native_password
+      restart: always
+      volumes:
+        - "/opt/data/mysql:/var/lib/mysql"
+      ports:
+        - "3606:3606"
+      environment:
+        MYSQL_ROOT_PASSWORD: "mypasswd"
+        MYSQL_DATABASE: "flask"
+
+   proxy:
+      image: foxylion/nginx-self-signed-https:latest
+      restart: always
+      environment:
+        REMOTE_URL: "http://flask:8081"
+      depends_on:
+        - flask
