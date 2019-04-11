@@ -12,7 +12,8 @@ node {
         app = docker.build("ggriffin924/flask-alpine-docker", "-f python3/Dockerfile python3") 
     }
     stage('Push Image to dockerhub') {
-        docker.withRegistry('https://registry-1.docker.io/v2/', 'flask-alpine-docker') {
+        echo "Push Image: ${image_name}"
+        docker.withRegistry('https://registry-1.docker.io/v2/', "${container_nm}") {
                app.push("${image_tag}")
                app.push("latest")
         }
