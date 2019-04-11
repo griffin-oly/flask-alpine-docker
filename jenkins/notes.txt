@@ -1,0 +1,17 @@
+# notes
+
+docker build -t jenkins-docker .
+docker inspect myjenk
+
+docker run -d --name MyJenkins1 -p 8080:8080 -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home myjenk
+
+docker run -d --name MyJenkins1 -p 8080:8080 \
+    -p 50000:50000 -v /var/jenkins_home:/var/jenkins_home \
+    -v /var/run/docker.sock:/var/run/docker.sock jenkins-docker
+
+docker exec -it MyJenkins1 bash
+
+jenkins mount point: /var/jenkins_home
+
+-v /var/jenkins_home:/var/jenkins_home
+

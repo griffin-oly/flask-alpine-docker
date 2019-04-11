@@ -1,0 +1,6 @@
+scm-api:latest
+git-client:latest
+git:latest
+greenballs:latest
+docker-build-publish:latest
+global-slack-notifier:latest
