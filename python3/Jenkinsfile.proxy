@@ -1,0 +1,25 @@
+node {
+    def app
+    creds_nm = "pipeline-docker-hub"  // my creds for login to docker-hub
+    registry_nm = "foxylion/nginx-https-redirect"
+    container_nm = "flask-proxy"  // mybe move this to an env Var later
+    image_name = "${registry_nm}:${image_tag}"
+    redirect_port = 8081
+
+    stage('Clone repo'){
+        checkout scm
+    }
+    stage('Deploy Docker image'){
+        // docker run -d --name flask-proxy -p 8081:80 foxylion/nginx-https-redirect:latest
+            echo "My current build image: ${image_name}"
+            try {
+                sh  "docker stop ${container_nm}"
+                sh  "docker rm ${container_nm}"
+            } catch (all) {
+                // do cleanup
+                echo "Docker ${container_nm} not found"
+                // throw new Exception("Stop docker container failed")
+            }
+            sh "docker run -d --name ${container_nm} -p 8081:80 ${image_name}"
+    }
+}
