@@ -9,7 +9,7 @@ node {
         checkout scm
     }
     stage('Build Image'){
-        app = docker.build("ggriffin924/flask-alpine-docker")
+        app = docker.build("ggriffin924/flask-alpine-docker/python3")
     }
     stage('Push Image to dockerhub') {
         docker.withRegistry('https://registry-1.docker.io/v2/', 'flask-alpine-docker') {
