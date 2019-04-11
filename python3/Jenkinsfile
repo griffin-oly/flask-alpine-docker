@@ -1,5 +1,6 @@
 node {
     def app
+    creds_nm = "pipeline-docker-hub"
     registry_nm = "ggriffin924/flask-alpine-docker"
     container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
     image_tag = "dev-${env.BUILD_NUMBER}"
@@ -13,7 +14,7 @@ node {
     }
     stage('Push Image to dockerhub') {
         echo "Push Image: ${image_name}"
-        docker.withRegistry('https://registry-1.docker.io/v2/', "${registry_nm}") {
+        docker.withRegistry('https://registry-1.docker.io/v2/', "${creds_nm}") {
                app.push("${image_tag}")
                app.push("latest")
         }
