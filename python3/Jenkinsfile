@@ -9,7 +9,7 @@ node {
         checkout scm
     }
     stage('Build Image'){
-        app = docker.build("${registry_nm}", "-f python3/Dockerfile python3") 
+        app = docker.build("${registry_nm}","-f python3/Dockerfile python3") 
     }
     stage('Push Image to dockerhub') {
         echo "Push Image: ${image_name}"
