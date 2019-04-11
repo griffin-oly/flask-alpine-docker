@@ -1,6 +1,6 @@
 node {
     def app
-    creds_nm = "pipeline-docker-hub"
+    creds_nm = "pipeline-docker-hub"  // my creds for login to docker-hub
     registry_nm = "ggriffin924/flask-alpine-docker"
     container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
     image_tag = "dev-${env.BUILD_NUMBER}"
@@ -18,5 +18,18 @@ node {
                app.push("${image_tag}")
                app.push("latest")
         }
+    }
+    stage('Deploy Docker image'){
+        // docker run -d --name flask-alpine-docker -p 8081:80 ggriffin924/flask-alpine-docker:<label>
+            echo "My current build image: ${image_name}"
+            try {
+                sh  "docker stop ${container_nm}"
+                sh  "docker rm ${container_nm}"
+            } catch (all) {
+                // do cleanup
+                echo "Docker ${container_nm} not found"
+                // throw new Exception("Stop docker container failed")
+            }
+            sh "docker run -d --name ${container_nm} -p 8081:80 ${image_name}"
     }
 }

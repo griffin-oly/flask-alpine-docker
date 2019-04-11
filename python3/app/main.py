@@ -28,7 +28,7 @@ def hello():
                   <strong>Nginx</strong> and...
                   <br> managed by 
                     <strong>supervisord</strong> all in an 
-                    <strong>Alpine</strong> Docker container
+                    <strong>Alpine</strong> Docker alpine container
                   </p>
                 </div>
 """
