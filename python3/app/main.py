@@ -1,6 +1,11 @@
 from flask import Flask
+import pymysql
+
+db = pymysql.connect("db", "root", "mypasswd", "flask")
+
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def hello():
@@ -36,6 +41,14 @@ def hello():
 @app.route("/healthz")
 def healthz():
     return "OK"
+
+@app.route('/db')
+def list_db():
+   cursor = db.cursor()
+   sql = "SELECT * FROM table"
+   cursor.execute(sql)
+   results = cursor.fetchall()
+   return render_template('static/db.html', results=results)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
