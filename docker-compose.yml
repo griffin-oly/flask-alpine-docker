@@ -3,7 +3,7 @@ version: '2'
 services:
 
    flask:
-      image: ggriffin924/flask-alpine-docker:latest
+      image: ggriffin924/flask-alpine-docker:${DEPLOYMENT_TAG}
       restart: always
       volumes:
         - "/opt/data/images:/app/static/images"

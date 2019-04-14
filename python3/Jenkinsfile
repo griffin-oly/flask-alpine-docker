@@ -20,14 +20,14 @@ node {
         }
     }
     stage('Deploy Application'){
-        // docker run -d --name flask-alpine-docker -p 8081:80 ggriffin924/flask-alpine-docker:<label>
-            echo "My current build image: ${image_name}"
-            try {
-                sh  "docker-compose up -d"
-            } catch (all) {
-                // do cleanup
-                echo "Docker-Compose errors"
-            }
-            // sh "docker run -d --name ${container_nm} -p 8081:80 -v /opt/data/images:/app/static/images ${image_name}"
-    }
+        environment {
+          DEPLOYMENT_TAG = "${image_tag}"
+        }
+        echo "My current build image: ${image_name}"
+        try {
+           sh  "docker-compose up -d"
+        } catch (all) {
+            // do cleanup
+           echo "Docker-Compose errors"
+        }
 }
