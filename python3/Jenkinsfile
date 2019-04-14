@@ -5,7 +5,6 @@ node {
     container_nm = "flask-alpine-docker"  // mybe move this to an env Var later
     image_tag = "dev-${env.BUILD_NUMBER}"
     image_name = "${registry_nm}:${image_tag}"
-
     stage('Clone repo'){
         checkout scm
     }
@@ -20,9 +19,8 @@ node {
         }
     }
     stage('Deploy Application'){
-        environment {
-          DEPLOYMENT_TAG = "${image_tag}"
-          echo "My current build image: ${image_name}"
+        echo "My current build image: ${image_name}"
+        withEnv(["DEPLOYMENT_TAG = "${image_tag}"]) {
           try {
              sh  "docker-compose up -d"
           } catch (all) {
