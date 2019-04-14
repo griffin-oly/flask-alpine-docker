@@ -22,13 +22,13 @@ node {
     stage('Deploy Application'){
         environment {
           DEPLOYMENT_TAG = "${image_tag}"
-        }
-        echo "My current build image: ${image_name}"
-        try {
-           sh  "docker-compose up -d"
-        } catch (all) {
-            // do cleanup
-           echo "Docker-Compose errors"
+          echo "My current build image: ${image_name}"
+          try {
+             sh  "docker-compose up -d"
+          } catch (all) {
+              // do cleanup
+             echo "Docker-Compose errors"
+          }
         }
     }
 }
