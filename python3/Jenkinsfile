@@ -30,4 +30,5 @@ node {
             // do cleanup
            echo "Docker-Compose errors"
         }
+    }
 }
