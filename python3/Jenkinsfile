@@ -20,7 +20,7 @@ node {
     }
     stage('Deploy Application'){
         echo "My current build image: ${image_name}"
-        withEnv(["DEPLOYMENT_TAG = "${image_tag}"]) {
+        withEnv(["DEPLOYMENT_TAG=${image_tag}"]) {
           try {
              sh  "docker-compose up -d"
           } catch (all) {
